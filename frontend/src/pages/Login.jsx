@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import AuthImagePattern from "../components/AuthImagePattern";
+import { login } from "../store/slices/authSlice";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,7 +17,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch(login(formData));
+    dispatch(login(formData));
   }
   return (
     <>

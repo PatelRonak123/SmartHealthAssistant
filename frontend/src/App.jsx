@@ -16,7 +16,7 @@ import Navbar from "./components/Navbar";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import Profile from "./pages/Profile";
+import Profile from "./pages/Profile"
 import { ToastContainer } from "react-toastify";
 
 
@@ -55,11 +55,11 @@ const App = () => {
             element={authUser ? <Home /> : <Navigate to={"/login"} />}
           />
           <Route
-            path="register"
+            path="/register"
             element={!authUser ? <Register /> : <Navigate to={"/"} />}
           />
           <Route
-            path="login"
+            path="/login"
             element={!authUser ? <Login /> : <Navigate to={"/"} />}
           />
           <Route
