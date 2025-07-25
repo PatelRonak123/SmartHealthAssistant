@@ -30,7 +30,7 @@ export const getMessages = createAsyncThunk(
 
 export const sendMessage = createAsyncThunk(
   "chat/sendMessage",
-  async(messageData, thunkAPI) => {
+  async (messageData, thunkAPI) => {
     const { chat } = thunkAPI.getState();
     if (!chat.selectedUser || !chat.selectedUser._id) {
       toast.error("No user selected for chat.");
@@ -42,7 +42,6 @@ export const sendMessage = createAsyncThunk(
         messageData
       );
       return res.data;
-    
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data?.message || "Failed to send message");
@@ -91,8 +90,11 @@ const chatSlice = createSlice({
         state.isMessagesLoading = false;
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
+        if (!Array.isArray(state.messages)) {
+          state.messages = [];
+        }
         state.messages.push(action.payload);
-      }); 
+      });
   },
 });
 
