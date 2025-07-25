@@ -22,7 +22,7 @@ export const getMessages = catchAsyncError(async (req, res, next) => {
   if (!receiver) {
     return res.status(400).json({
       status: false,
-      message: "Receiver ID Invalid",
+      message: "Receiver ID is Invalid",
     });
   }
   const messages = await Message.find({
