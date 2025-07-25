@@ -31,13 +31,22 @@ export const getMessages = createAsyncThunk(
 export const sendMessage = createAsyncThunk(
   "chat/sendMessage",
   async(messageData, thunkAPI) => {
+    const { chat } = thunkAPI.getState();
+    if (!chat.selectedUser || !chat.selectedUser._id) {
+      toast.error("No user selected for chat.");
+      return thunkAPI.rejectWithValue("No user selected");
+    }
     try {
-      const { chat } = thunkAPI.getState();
-      const res = await axiosInstance.post(`/message/send/${chat.selectedUser._id}`, messageData);
+      const res = await axiosInstance.post(
+        `/message/send/${chat.selectedUser._id}`,
+        messageData
+      );
       return res.data;
+    
     } catch (error) {
-      toast.error(error.response.data.message);
-      return thunkAPI.rejectWithValue(error.response.data.message);
+      console.log(error);
+      toast.error(error.response?.data?.message || "Failed to send message");
+      return thunkAPI.rejectWithValue(error.response?.data?.message);
     }
   }
 );
@@ -80,7 +89,10 @@ const chatSlice = createSlice({
       })
       .addCase(getMessages.rejected, (state, action) => {
         state.isMessagesLoading = false;
-      });
+      })
+      .addCase(sendMessage.fulfilled, (state, action) => {
+        state.messages.push(action.payload);
+      }); 
   },
 });
 
