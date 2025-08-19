@@ -9,6 +9,7 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(logout());
   };
+
   return (
     <>
       <header className="fixed top-0 w-full z-40 bg-white/80 backdrop-blur-lg border border-gray-200 shadow-sm">

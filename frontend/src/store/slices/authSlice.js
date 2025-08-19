@@ -57,6 +57,7 @@ export const signup = createAsyncThunk(
   }
 );
 
+<<<<<<< HEAD
 export const updateProfile = createAsyncThunk("user/update-profile", async (data, thunkAPI) => {
   try{
         const res = await axiosInstance.put("/user/update-profile", data);
@@ -67,6 +68,23 @@ export const updateProfile = createAsyncThunk("user/update-profile", async (data
         return thunkAPI.rejectWithValue(error.response.data.message);
   }
  })
+=======
+export const updateProfile = createAsyncThunk(
+  "user/update-profile",
+  async (data, thunkAPI) => {
+    try {
+      const res = await axiosInstance.put("/user/update-profile", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      toast.success("Profile updated successfully");
+      return res.data;
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to update profile");
+      return thunkAPI.rejectWithValue(error.response?.data?.message);
+    }
+  }
+);
+>>>>>>> main
 
 const authSlice = createSlice({
   name: "auth",
@@ -126,12 +144,21 @@ const authSlice = createSlice({
         state.isUpdatingProfile = true;
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
+<<<<<<< HEAD
         state.authUser = action.payload;
         state.isUpdatingProfile = false;
       })
       .addCase(updateProfile.rejected, (state) => {
         state.isUpdatingProfile = false;
       });
+=======
+        state.authUser = action.payload; // update Redux user
+        state.isUpdatingProfile = false;
+      })
+      .addCase(updateProfile.rejected,(state)=>{
+        state.isUpdatingProfile = false;
+      })
+>>>>>>> main
   },
 });
 

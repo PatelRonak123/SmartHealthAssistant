@@ -9,7 +9,7 @@ export const getAllUsers = catchAsyncError(async (req, res, next) => {
   const filteredUsers = await User.find({ _id: { $ne: user } }).select(
     "-password"
   );
-  return res.status(200).json({ 
+  return res.status(200).json({
     status: true,
     users: filteredUsers,
   });
@@ -61,9 +61,9 @@ export const sendMessage = catchAsyncError(async (req, res, next) => {
   }
 
   let mediaUrl = "";
-  
-    if (media) {
-      try{
+
+  if (media) {
+    try {
       const uploadResponse = await cloudinary.uploader.upload(
         media.tempFilePath,
         {
@@ -77,15 +77,14 @@ export const sendMessage = catchAsyncError(async (req, res, next) => {
         }
       );
       mediaUrl = uploadResponse?.secure_url;
+    } catch (err) {
+      console.error("Cloudinary upload error", err);
+      return res.status(500).json({
+        status: false,
+        message: "Failed to upload media. Please try again later.",
+      });
     }
-  catch (err) {
-    console.error("Cloudinary upload error", err);
-    return res.status(500).json({
-      status: false,
-      message: "Failed to upload media. Please try again later.",
-    });
   }
-}
 
   const newMessage = await Message.create({
     senderId,
