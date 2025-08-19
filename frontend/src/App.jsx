@@ -64,7 +64,7 @@ const App = () => {
           />
           <Route
             path="/profile"
-            element={!authUser ? <Profile /> : <Navigate to={"/login"} />}
+            element={authUser ? <Profile /> : <Navigate to={"/login"} />}
           />
         </Routes>
         <ToastContainer />

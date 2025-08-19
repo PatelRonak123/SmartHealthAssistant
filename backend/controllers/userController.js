@@ -115,7 +115,6 @@ export const getUser = catchAsyncError(async (req, res, next) => {
 
 export const updateProfile = catchAsyncError(async (req, res, next) => {
   const { email, fullName } = req.body;
-  console.log(req.body);
   if (fullName?.trim().length === 0 || email?.trim().length === 0) {
     return res.status(400).json({
       status: false,
