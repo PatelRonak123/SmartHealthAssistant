@@ -18,6 +18,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile"
 import { ToastContainer } from "react-toastify";
+import ChatbotButton from "./components/ChatBot/ChatbotButton";
 
 
 const App = () => {
@@ -68,6 +69,8 @@ const App = () => {
           />
         </Routes>
         <ToastContainer />
+        {/* Add ChatbotButton only when user is authenticated */}
+        {authUser && <ChatbotButton />}
       </Router>
     </>
   );

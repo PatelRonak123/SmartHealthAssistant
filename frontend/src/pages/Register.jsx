@@ -140,9 +140,9 @@ const Register = () => {
           </div>
         </div>
         <AuthImagePattern
-          title={"Join out community!"}
+          title={"Join Smart Health Assistant Community!"}
           subtitle={
-            "Connect with friends and family, share your thoughts, and stay in touch with your loved ones."
+            "Create your account to start chatting, book hospital appointments, and access our AI-powered healthcare assistant."
           }
         />
       </div>
