@@ -120,8 +120,8 @@ const Login = () => {
 
         {/* Right side - Pattern */}
         <AuthImagePattern
-          title={"Welcome back!"}
-          subtitle={"Sign in to continue your conversation and catch up with your messages."}
+          title={"Welcome Back to Smart Health Assistant!"}
+          subtitle={"Sign in to access your conversations, book appointments, and connect with our AI assistant."}
         />
 
       </div>

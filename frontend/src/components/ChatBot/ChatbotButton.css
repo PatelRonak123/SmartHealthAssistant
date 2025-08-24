@@ -1,0 +1,202 @@
+
+.chatbot-container {
+  position: fixed;
+  bottom: 20px;
+  /*left: 20px;*/
+  right: 20px;
+  z-index: 1000;
+}
+
+.chatbot-button {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+  border: 3px solid white;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(33, 150, 243, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.chatbot-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.chatbot-button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 35px rgba(33, 150, 243, 0.5);
+}
+
+.chatbot-button:hover::before {
+  opacity: 1;
+}
+
+.chatbot-button:active {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+}
+
+.chatbot-button i {
+  color: white;
+  font-size: 28px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.chatbot-button:hover i {
+  transform: rotate(10deg) scale(1.1);
+}
+
+/* Pulse animation for attention */
+.chatbot-button {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.4);
+  }
+  50% {
+    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.4), 0 0 0 8px rgba(33, 150, 243, 0.15);
+  }
+  100% {
+    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.4);
+  }
+}
+
+/* Hospital theme indicator */
+.chatbot-button::after {
+  content: '💬';
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+/* Medical cross pattern overlay */
+.chatbot-button .medical-cross {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.chatbot-button .medical-cross::before,
+.chatbot-button .medical-cross::after {
+  content: '';
+  position: absolute;
+  background: white;
+}
+
+.chatbot-button .medical-cross::before {
+  width: 20px;
+  height: 4px;
+  top: 13px;
+  left: 5px;
+}
+
+.chatbot-button .medical-cross::after {
+  width: 4px;
+  height: 20px;
+  top: 5px;
+  left: 13px;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .chatbot-container {
+    bottom: 15px;
+    /*left: 15px;*/
+    right: 15px;
+  }
+  
+  .chatbot-button {
+    width: 55px;
+    height: 55px;
+  }
+  
+  .chatbot-button i {
+    font-size: 24px;
+  }
+  
+  .chatbot-button::after {
+    width: 18px;
+    height: 18px;
+    font-size: 9px;
+  }
+}
+
+/* Accessibility improvements */
+.chatbot-button:focus {
+  outline: none;
+  box-shadow: 0 8px 25px rgba(33, 150, 243, 0.4), 0 0 0 3px rgba(33, 150, 243, 0.3);
+}
+
+/* Loading state */
+.chatbot-button.loading {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Professional glow effect */
+.chatbot-button {
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+  background-size: 200% 200%;
+  animation: pulse 2s infinite, gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
