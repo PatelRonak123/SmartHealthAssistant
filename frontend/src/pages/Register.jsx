@@ -29,116 +29,127 @@ const Register = () => {
   };
   return (
     <>
-      <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-white">
-        <div className="flex flex-col justify-center items-center px-6 py-12">
-          <div className="w-full max-w-md">
+         <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
+        <div className="flex flex-col justify-center items-center px-6 py-12 relative overflow-hidden">
+            {/* Subtle background elements */}
+          <div className="absolute top-20 left-10 w-32 h-32 bg-blue-100/30 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-24 h-24 bg-purple-100/30 rounded-full blur-3xl"></div>
+
+              <div className="w-full max-w-md relative z-10">
             {/* Logo & Heading */}
-            <div className="flex flex-col items-center text-center mb-10">
-              <div className="bg-blue-100 p-3 rounded-lg">
-                <MessageSquare className="text-blue-600 w-6 h-6" />
+             <div className="flex flex-col items-center text-center mb-10">
+              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-2xl shadow-xl mb-4 hover:scale-105 transition-transform duration-300">
+                <MessageSquare className="text-white w-8 h-8" />
               </div>
-              <h1 className="text-2xl font-bold mt-4">Create Account</h1>
-              <p className="text-gray-500 text-sm mt-2">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent mb-2">Create Account</h1>
+              <p className="text-slate-600 text-base font-medium">
                 Get started with your free account
               </p>
             </div>
 
             {/* Register from*/}
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Full Name
-              </label>
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                  <User className="w-5 h-5" />
-                </span>
-                <input
-                  type="text"
-                  className="w-full border border-gray-300 rounded-md py-2 pl-10 pr-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="John Doe"
-                  value={formData.fullName}
-                  onChange={(e) => {
-                    setFormData({ ...formData, fullName: e.target.value });
-                  }}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Email
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                    <Mail className="w-5 h-5" />
-                  </span>
-                  <input
-                    type="email"
-                    className="w-full border border-gray-300 rounded-md py-2 pl-10 pr-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="you@gamil.com"
-                    value={formData.email}
-                    onChange={(e) => {
-                      setFormData({ ...formData, email: e.target.value });
-                    }}
-                  />
+             <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-8 shadow-2xl border border-white/50">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">
+                    Full Name
+                  </label>
+                  <div className="relative group">
+                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors z-10">
+                      <User className="w-5 h-5" />
+                    </div>
+                    <input
+                      type="text"
+                      className="w-full border-2 border-slate-200 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 bg-white/90 backdrop-blur-sm"
+                      placeholder="John Doe"
+                      value={formData.fullName}
+                      onChange={(e) => {
+                        setFormData({ ...formData, fullName: e.target.value });
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Password
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                    <Lock className="w-5 h-5" />
-                  </span>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    className="w-full border border-gray-300 rounded-md py-2 pl-10 pr-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="********"
-                    value={formData.password}
-                    onChange={(e) => {
-                      setFormData({ ...formData, password: e.target.value });
-                    }}
-                  />
-                  <button
-                    type="button"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="w-5 h-5" />
-                    ) : (
-                      <Eye className="w-5 h-5" />
-                    )}
-                  </button>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">
+                    Email 
+                  </label>
+                  <div className="relative group">
+                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors z-10">
+                      <Mail className="w-5 h-5" />
+                    </div>
+                    <input
+                      type="email"
+                      className="w-full border-2 border-slate-200 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 bg-white/90 backdrop-blur-sm"
+                      placeholder="you@example.com"
+                      value={formData.email}
+                      onChange={(e) => {
+                        setFormData({ ...formData, email: e.target.value });
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
+
+                      <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">
+                    Password
+                  </label>
+                  <div className="relative group">
+                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors z-10">
+                      <Lock className="w-5 h-5" />
+                    </div>
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="w-full border-2 border-slate-200 rounded-xl py-3 pl-12 pr-12 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 bg-white/90 backdrop-blur-sm"
+                      placeholder="********"
+                      value={formData.password}
+                      onChange={(e) => {
+                        setFormData({ ...formData, password: e.target.value });
+                      }}
+                    />
+                    <button
+                      type="button"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors z-10"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? (
+                        <EyeOff className="w-5 h-5" />
+                      ) : (
+                        <Eye className="w-5 h-5" />
+                      )}
+                    </button>
+                  </div>
+                </div>
 
               {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={isSigningUp}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-md transition duration-200 flex justify-center items-center gap-2"
-              >
-                {isSigningUp ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin" /> Loading...
-                  </>
-                ) : (
-                  "Create Account"
-                )}
-              </button>
-            </form>
+                    <button
+                  type="submit"
+                  disabled={isSigningUp}
+                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 flex justify-center items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+                >
+                  {isSigningUp ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" /> Loading...
+                    </>
+                  ) : (
+                    "Create Account"
+                  )}
+                </button>
+              </form>
+            </div>
+
             {/* Footer */}
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-500">
+            <div className="mt-8 text-center">
+              <p className="text-slate-600 font-medium">
                 Already have an account?{" "}
-                <Link to="/login" className="text-blue-600 hover:underline">
+                <Link to="/login" className="text-blue-600 hover:text-blue-700 font-semibold hover:underline transition-all duration-200">
                   Sign In
                 </Link>
               </p>
             </div>
           </div>
         </div>
+        
         <AuthImagePattern
           title={"Join Smart Health Assistant Community!"}
           subtitle={
