@@ -47,8 +47,12 @@ const Profile = () => {
         <div className="max-w-2xl mx-auto p-4 py-8">
           <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 p-8 space-y-10">
             <div className="text-center">
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent mb-3">Profile Settings</h1>
-              <p className="text-lg text-slate-600 font-medium">Manage your account information</p>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent mb-3">
+                Profile Settings
+              </h1>
+              <p className="text-lg text-slate-600 font-medium">
+                Manage your account information
+              </p>
             </div>
 
             {/* Avatar Upload */}
@@ -68,7 +72,7 @@ const Profile = () => {
                     isUpdatingProfile ? "animate-pulse pointer-events-none" : ""
                   }`}
                 >
-                 <Camera className="w-6 h-6 text-white" />
+                  <Camera className="w-6 h-6 text-white" />
                   <input
                     type="file"
                     id="avatar-upload"
@@ -102,12 +106,12 @@ const Profile = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, fullName: e.target.value })
                   }
-                   className="w-full px-6 py-4 bg-white/90 backdrop-blur-sm rounded-xl border-2 border-slate-200 text-slate-800 font-medium focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 shadow-md hover:shadow-lg"
+                  className="w-full px-6 py-4 bg-white/90 backdrop-blur-sm rounded-xl border-2 border-slate-200 text-slate-800 font-medium focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 shadow-md hover:shadow-lg"
                   placeholder="Enter your full name"
                 />
               </div>
 
-             <div className="space-y-3">
+              <div className="space-y-3">
                 <label className="text-base font-bold text-slate-700 flex items-center gap-3">
                   <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center shadow-md">
                     <Mail className="w-4 h-4 text-white" />
@@ -130,11 +134,12 @@ const Profile = () => {
             <button
               onClick={handleUpdateProfile}
               disabled={isUpdatingProfile}
-             className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 flex justify-center items-center gap-3 shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 flex justify-center items-center gap-3 shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
             >
               {isUpdatingProfile ? (
                 <>
-                  <Loader2 className="w-6 h-6 animate-spin" /> Updating Profile...
+                  <Loader2 className="w-6 h-6 animate-spin" /> Updating
+                  Profile...
                 </>
               ) : (
                 "Update Profile"
@@ -142,19 +147,21 @@ const Profile = () => {
             </button>
 
             {/* Account Information */}
-          <div className="bg-gradient-to-br from-slate-50 to-gray-50 border-2 border-slate-200/50 rounded-2xl p-8 shadow-lg">
+            <div className="bg-gradient-to-br from-slate-50 to-gray-50 border-2 border-slate-200/50 rounded-2xl p-8 shadow-lg">
               <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
                 <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center shadow-md">
                   <User className="w-4 h-4 text-white" />
                 </div>
                 Account Information
               </h2>
-             <div className="space-y-4 text-base text-slate-700">
+              <div className="space-y-4 text-base text-slate-700">
                 <div className="flex items-center justify-between py-4 px-4 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/50 shadow-sm hover:shadow-md transition-all duration-300">
                   <span className="font-semibold">Member Since</span>
-               <span className="font-medium text-slate-600">{authUser?.createdAt?.split("!")[0]}</span>
+                  <span className="font-medium text-slate-600">
+                    {authUser?.createdAt?.split("!")[0]}
+                  </span>
                 </div>
-              <div className="flex items-center justify-between py-4 px-4 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/50 shadow-sm hover:shadow-md transition-all duration-300">
+                <div className="flex items-center justify-between py-4 px-4 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/50 shadow-sm hover:shadow-md transition-all duration-300">
                   <span className="font-semibold">Account Status</span>
                   <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent font-bold flex items-center gap-2">
                     <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>

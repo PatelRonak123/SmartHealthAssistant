@@ -10,7 +10,7 @@ import {
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AuthImagePattern from "../components/AuthImagePattern";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import { signup } from "../store/slices/authSlice";
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,30 +25,32 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signup(formData))
+    dispatch(signup(formData));
   };
   return (
     <>
-         <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
+      <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
         <div className="flex flex-col justify-center items-center px-6 py-12 relative overflow-hidden">
-            {/* Subtle background elements */}
+          {/* Subtle background elements */}
           <div className="absolute top-20 left-10 w-32 h-32 bg-blue-100/30 rounded-full blur-3xl"></div>
           <div className="absolute bottom-20 right-10 w-24 h-24 bg-purple-100/30 rounded-full blur-3xl"></div>
 
-              <div className="w-full max-w-md relative z-10">
+          <div className="w-full max-w-md relative z-10">
             {/* Logo & Heading */}
-             <div className="flex flex-col items-center text-center mb-10">
+            <div className="flex flex-col items-center text-center mb-10">
               <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-2xl shadow-xl mb-4 hover:scale-105 transition-transform duration-300">
                 <MessageSquare className="text-white w-8 h-8" />
               </div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent mb-2">Create Account</h1>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent mb-2">
+                Create Account
+              </h1>
               <p className="text-slate-600 text-base font-medium">
                 Get started with your free account
               </p>
             </div>
 
             {/* Register from*/}
-             <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-8 shadow-2xl border border-white/50">
+            <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-8 shadow-2xl border border-white/50">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">
@@ -70,9 +72,9 @@ const Register = () => {
                   </div>
                 </div>
 
-              <div>
+                <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">
-                    Email 
+                    Email
                   </label>
                   <div className="relative group">
                     <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors z-10">
@@ -90,7 +92,7 @@ const Register = () => {
                   </div>
                 </div>
 
-                      <div>
+                <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">
                     Password
                   </label>
@@ -121,8 +123,8 @@ const Register = () => {
                   </div>
                 </div>
 
-              {/* Submit Button */}
-                    <button
+                {/* Submit Button */}
+                <button
                   type="submit"
                   disabled={isSigningUp}
                   className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 flex justify-center items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
@@ -142,14 +144,16 @@ const Register = () => {
             <div className="mt-8 text-center">
               <p className="text-slate-600 font-medium">
                 Already have an account?{" "}
-                <Link to="/login" className="text-blue-600 hover:text-blue-700 font-semibold hover:underline transition-all duration-200">
+                <Link
+                  to="/login"
+                  className="text-blue-600 hover:text-blue-700 font-semibold hover:underline transition-all duration-200"
+                >
                   Sign In
                 </Link>
               </p>
             </div>
           </div>
         </div>
-        
         <AuthImagePattern
           title={"Join Smart Health Assistant Community!"}
           subtitle={
