@@ -1,106 +1,21 @@
 import { catchAsyncError } from "../middlewares/catchAsyncError.js";
 import { User } from "../models/userModel.js";
-import bcrypt from "bcrypt";
-import { gernerateJWtToken } from "../utils/jwtToken.js";
 import { v2 as cloudinary } from "cloudinary";
 
-export const signup = catchAsyncError(async (req, res, next) => {
-  const { fullName, email, password } = req.body;
-  if (!fullName || !email || !password) {
-    return res.status(400).json({
-      status: false,
-      message: "Please provide complete details",
-    });
-  }
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  if (!emailRegex.test(email)) {
-    return res.status(400).json({
-      status: false,
-      message: "Invalid Email Format",
-    });
-  }
-
-  if (password.length < 8) {
-    return res.status(400).json({
-      status: false,
-      message: "Password must be at least 8 character long",
-    });
-  }
-
-  const isEmailAlreadyUsed = await User.findOne({ email });
-  if (isEmailAlreadyUsed) {
-    return res.status(400).json({
-      status: false,
-      message: "Email is already registered.",
-    });
-  }
-
-  const hashPassword = await bcrypt.hash(password, 10);
-  const user = await User.create({
-    fullName,
-    email,
-    password: hashPassword,
-    avatar: {
-      public_id: "",
-      url: "",
-    },
-  });
-
-  gernerateJWtToken(user, "User registered successfully", 201, res);
-});
-
-export const signin = catchAsyncError(async (req, res, next) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(400).json({
-      status: false,
-      message: "Please provide email and password",
-    });
-  }
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  if (!emailRegex.test(email)) {
-    return res.status(400).json({
-      status: false,
-      message: "Invalid Email Format",
-    });
-  }
-
-  const user = await User.findOne({ email });
-  if (!user) {
-    return res.status(400).json({
-      status: false,
-      message: "Invalid Credentials",
-    });
-  }
-
-  const isMatched = await bcrypt.compare(password, user.password);
-  if (!isMatched) {
-    return res.status(400).json({
-      status: false,
-      message: "Invalid Credentials",
-    });
-  }
-
-  gernerateJWtToken(user, "User login successfully", 201, res);
-});
+// REMOVE: signup and signin (handled by Clerk on frontend)
 
 export const signout = catchAsyncError(async (req, res, next) => {
-  return res
-    .status(200)
-    .cookie("token", "", {
-      httpOnly: true,
-      maxAge: 0,
-      sameSite: "strict",
-      secure: process.env.NODE_ENV !== "development" ? true : false,
-    })
-    .json({
-      status: true,
-      message: "User logged out successfully",
-    });
+  // Clerk handles signout on the frontend.
+  // Optionally, clear any backend session or socket here.
+  return res.status(200).json({
+    status: true,
+    message: "User logged out successfully",
+  });
 });
 
 export const getUser = catchAsyncError(async (req, res, next) => {
-  const user = await User.findById(req.user.id);
+  // Use Clerk user ID to find user in MongoDB
+  const user = await User.findOne({ clerkUserId: req.user.clerkUserId });
   if (!user) {
     return res.status(400).json({
       status: false,
@@ -166,14 +81,42 @@ export const updateProfile = catchAsyncError(async (req, res, next) => {
     };
   }
 
-  let user = await User.findByIdAndUpdate(req.user._id, data, {
-    new: true,
-    runValidators: true,
-  });
+  // Update user by Clerk user ID
+  let user = await User.findOneAndUpdate(
+    { clerkUserId: req.user.clerkUserId },
+    data,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
   return res.status(200).json({
     status: true,
     message: "Profile updated Successfully",
     user,
   });
-});
+});import { useAuth } from "@clerk/clerk-react";
+import axios from "axios";
+
+export const useClerkAxios = () => {
+  const { getToken } = useAuth();
+
+  const clerkAxios = axios.create({
+    baseURL:
+      import.meta.env.MODE === "development"
+        ? "http://localhost:4000/api/v1"
+        : "/",
+    withCredentials: true,
+  });
+
+  clerkAxios.interceptors.request.use(async (config) => {
+    const token = await getToken();
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  });
+
+  return clerkAxios;
+};

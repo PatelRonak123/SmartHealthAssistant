@@ -2,34 +2,36 @@ import { catchAsyncError } from "../middlewares/catchAsyncError.js";
 import { Message } from "../models/messageModel.js";
 import { User } from "../models/userModel.js";
 import { v2 as cloudinary } from "cloudinary";
-import { getReceiverSocketId} from "../utils/socket.js";
-import {io} from "../utils/socket.js";
+import { getReceiverSocketId } from "../utils/socket.js";
+import { io } from "../utils/socket.js";
 
+// Get all users except the current user
 export const getAllUsers = catchAsyncError(async (req, res, next) => {
-  const user = req.user;
-  const filteredUsers = await User.find({ _id: { $ne: user } }).select(
-    "-password"
-  );
+  const clerkUserId = req.user.clerkUserId;
+  const filteredUsers = await User.find({ clerkUserId: { $ne: clerkUserId } });
   return res.status(200).json({
     status: true,
     users: filteredUsers,
   });
 });
 
+// Get messages between current user and another user (by Clerk user ID)
 export const getMessages = catchAsyncError(async (req, res, next) => {
-  const receiverId = req.params.id;
-  const myId = req.user._id;
-  const receiver = await User.findById(receiverId);
+  const receiverClerkUserId = req.params.id;
+  const myClerkUserId = req.user.clerkUserId;
+
+  const receiver = await User.findOne({ clerkUserId: receiverClerkUserId });
   if (!receiver) {
     return res.status(400).json({
       status: false,
       message: "Receiver ID is Invalid",
     });
   }
+
   const messages = await Message.find({
     $or: [
-      { senderId: myId, receiverId: receiverId },
-      { senderId: receiverId, receiverId: myId },
+      { senderId: myClerkUserId, receiverId: receiverClerkUserId },
+      { senderId: receiverClerkUserId, receiverId: myClerkUserId },
     ],
   }).sort({ createdAt: 1 });
 
@@ -39,13 +41,14 @@ export const getMessages = catchAsyncError(async (req, res, next) => {
   });
 });
 
+// Send a message from current user to another user (by Clerk user ID)
 export const sendMessage = catchAsyncError(async (req, res, next) => {
   const { text } = req.body;
   const media = req?.files?.media;
-  const { id: receiverId } = req.params;
-  const senderId = req.user._id;
+  const { id: receiverClerkUserId } = req.params;
+  const senderClerkUserId = req.user.clerkUserId;
 
-  const receiver = await User.findById(receiverId);
+  const receiver = await User.findOne({ clerkUserId: receiverClerkUserId });
   if (!receiver) {
     return res.status(400).json({
       status: false,
@@ -88,13 +91,13 @@ export const sendMessage = catchAsyncError(async (req, res, next) => {
   }
 
   const newMessage = await Message.create({
-    senderId,
-    receiverId,
+    senderId: senderClerkUserId,
+    receiverId: receiverClerkUserId,
     text: sanitizedText,
     media: mediaUrl,
   });
 
-  const receiverSocketId = getReceiverSocketId(receiverId);
+  const receiverSocketId = getReceiverSocketId(receiverClerkUserId);
   if (receiverSocketId) {
     io.to(receiverSocketId).emit("newMessage", newMessage);
   }

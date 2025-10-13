@@ -1,159 +1,48 @@
-import {
-  Eye,
-  EyeOff,
-  Loader2,
-  Lock,
-  Mail,
-  MessageSquare,
-  User,
-} from "lucide-react";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { MessageSquare } from "lucide-react";
 import AuthImagePattern from "../components/AuthImagePattern";
-import { Link } from "react-router-dom";
-import { signup } from "../store/slices/authSlice";
+import { SignUp } from "@clerk/clerk-react";
+
 const Register = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-  });
-
-  const dispatch = useDispatch();
-  const { isSigningUp } = useSelector((state) => state.auth);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(signup(formData));
-  };
   return (
     <>
       <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
-        <div className="flex flex-col justify-center items-center px-6 py-12 relative overflow-hidden">
-          {/* Subtle background elements */}
-          <div className="absolute top-20 left-10 w-32 h-32 bg-blue-100/30 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-24 h-24 bg-purple-100/30 rounded-full blur-3xl"></div>
-
-          <div className="w-full max-w-md relative z-10">
-            {/* Logo & Heading */}
-            <div className="flex flex-col items-center text-center mb-10">
-              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-2xl shadow-xl mb-4 hover:scale-105 transition-transform duration-300">
-                <MessageSquare className="text-white w-8 h-8" />
-              </div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent mb-2">
-                Create Account
-              </h1>
-              <p className="text-slate-600 text-base font-medium">
-                Get started with your free account
-              </p>
+        {/* Left side - Clerk SignUp Component */}
+        <div className="flex flex-col justify-center items-center px-8 py-12">
+          <div className="w-full max-w-md">
+           
+            {/* Clerk SignUp Component Container */}
+            <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/50 p-6">
+              <SignUp
+                appearance={{
+                  elements: {
+                    rootBox: "w-full",
+                    card: "bg-transparent shadow-none border-0",
+                    headerTitle: "text-2xl font-bold text-slate-800",
+                    headerSubtitle: "text-slate-600",
+                    socialButtonsBlockButton: "bg-white hover:bg-gray-50 border-2 border-gray-200 text-gray-700 font-medium",
+                    formButtonPrimary: "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300",
+                    formFieldInput: "bg-white/90 backdrop-blur-sm rounded-xl border-2 border-slate-200 text-slate-800 font-medium focus:border-blue-500 focus:ring-4 focus:ring-blue-100",
+                    identityPreviewText: "text-slate-700",
+                    identityPreviewEditButton: "text-blue-600 hover:text-blue-700"
+                  }
+                }}
+              />
             </div>
-
-            {/* Register from*/}
-            <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-8 shadow-2xl border border-white/50">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">
-                    Full Name
-                  </label>
-                  <div className="relative group">
-                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors z-10">
-                      <User className="w-5 h-5" />
-                    </div>
-                    <input
-                      type="text"
-                      className="w-full border-2 border-slate-200 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 bg-white/90 backdrop-blur-sm"
-                      placeholder="John Doe"
-                      value={formData.fullName}
-                      onChange={(e) => {
-                        setFormData({ ...formData, fullName: e.target.value });
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">
-                    Email
-                  </label>
-                  <div className="relative group">
-                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors z-10">
-                      <Mail className="w-5 h-5" />
-                    </div>
-                    <input
-                      type="email"
-                      className="w-full border-2 border-slate-200 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 bg-white/90 backdrop-blur-sm"
-                      placeholder="you@example.com"
-                      value={formData.email}
-                      onChange={(e) => {
-                        setFormData({ ...formData, email: e.target.value });
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">
-                    Password
-                  </label>
-                  <div className="relative group">
-                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors z-10">
-                      <Lock className="w-5 h-5" />
-                    </div>
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      className="w-full border-2 border-slate-200 rounded-xl py-3 pl-12 pr-12 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 bg-white/90 backdrop-blur-sm"
-                      placeholder="********"
-                      value={formData.password}
-                      onChange={(e) => {
-                        setFormData({ ...formData, password: e.target.value });
-                      }}
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors z-10"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? (
-                        <EyeOff className="w-5 h-5" />
-                      ) : (
-                        <Eye className="w-5 h-5" />
-                      )}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  disabled={isSigningUp}
-                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 flex justify-center items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
-                >
-                  {isSigningUp ? (
-                    <>
-                      <Loader2 className="w-5 h-5 animate-spin" /> Loading...
-                    </>
-                  ) : (
-                    "Create Account"
-                  )}
-                </button>
-              </form>
-            </div>
-
             {/* Footer */}
             <div className="mt-8 text-center">
               <p className="text-slate-600 font-medium">
                 Already have an account?{" "}
-                <Link
-                  to="/login"
+                <a
+                  href="/login"
                   className="text-blue-600 hover:text-blue-700 font-semibold hover:underline transition-all duration-200"
                 >
                   Sign In
-                </Link>
+                </a>
               </p>
             </div>
           </div>
         </div>
+        {/* Right side - Pattern */}
         <AuthImagePattern
           title={"Join Smart Health Assistant Community!"}
           subtitle={

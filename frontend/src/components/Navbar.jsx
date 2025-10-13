@@ -1,15 +1,8 @@
-import { LogOut, MessageSquare, Settings, User } from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
+import { MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
-import { logout } from "../store/slices/authSlice";
+import { UserButton, SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react";
 
 const Navbar = () => {
-  const { authUser } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
-  const handleLogout = () => {
-    dispatch(logout());
-  };
-
   return (
     <>
       <header className="fixed top-0 w-full z-40 bg-white/95 backdrop-blur-xl border-b border-gray-200/50 shadow-lg">
@@ -30,25 +23,16 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-2">
-              {authUser && (
-                <>
-                  <Link
-                    to={"/profile"}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-blue-600 hover:bg-blue-50/80 backdrop-blur-sm transition-all duration-300 border border-transparent hover:border-blue-200/50 hover:shadow-md"
-                  >
-                    <User className="w-4 h-4" />
-                    <span className="hidden sm:inline">Profile</span>
-                  </Link>
-
-                  <button
-                    onClick={handleLogout}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-red-600 hover:bg-red-50/80 backdrop-blur-sm transition-all duration-300 border border-transparent hover:border-red-200/50 hover:shadow-md"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    <span className="hidden sm:inline">Logout</span>
+              <SignedIn>
+                <UserButton afterSignOutUrl="/login" />
+              </SignedIn>
+              <SignedOut>
+                <SignInButton mode="modal">
+                  <button className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-blue-600 hover:bg-blue-50/80 backdrop-blur-sm transition-all duration-300 border border-transparent hover:border-blue-200/50 hover:shadow-md">
+                    Sign In
                   </button>
-                </>
-              )}
+                </SignInButton>
+              </SignedOut>
             </div>
           </div>
         </div>
