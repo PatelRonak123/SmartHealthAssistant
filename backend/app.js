@@ -16,7 +16,7 @@ app.use(
     origin: [process.env.FRONTEND_URI],
     credentials: true,
     methods: ["GET", "POST", "DELETE", "PUT"],
-  })
+  })  
 );
 app.use(cookieParser());
 app.use(express.json());
