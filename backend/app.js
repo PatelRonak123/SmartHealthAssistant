@@ -29,9 +29,10 @@ app.use(
   })
 );
 
-app.use("/",(req,res)=>{
+// Lightweight health check without intercepting other routes
+app.get("/", (req, res) => {
   res.send("API is running....");
-})
+});
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/message", messageRouter);
